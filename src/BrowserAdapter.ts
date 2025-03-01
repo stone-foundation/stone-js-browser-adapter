@@ -1,9 +1,9 @@
 
 import { RawResponseWrapper } from './RawResponseWrapper'
 import { BrowserAdapterError } from './errors/BrowserAdapterError'
+import { Adapter, AdapterEventBuilder, AdapterEventHandlerType, IBlueprint, isEmpty } from '@stone-js/core'
 import { IncomingBrowserEvent, IncomingBrowserEventOptions, OutgoingBrowserResponse } from '@stone-js/browser-core'
 import { BrowserContext, BrowserEvent, BrowserResponse, BrowserAdapterContext, RawBrowserResponseOptions } from './declarations'
-import { Adapter, AdapterEventBuilder, AdapterEventHandlerType, AdapterOptions, LifecycleAdapterEventHandler } from '@stone-js/core'
 
 /**
  * Browser Adapter for Stone.js.
@@ -48,16 +48,17 @@ BrowserAdapterContext
   /**
    * Creates an instance of the `BrowserAdapter`.
    *
-   * This factory method allows developers to instantiate the adapter with
-   * the necessary configuration options, ensuring it is correctly set up for
-   * Browser usage.
+   * @param blueprint - The application blueprint.
+   * @returns A new instance of `BrowserAdapter`.
    *
-   * @param options - The configuration options for the adapter, including
-   *                  handler resolver, error handling, and other settings.
-   * @returns A fully initialized `BrowserAdapter` instance.
+   * @example
+   * ```typescript
+   * const adapter = BrowserAdapter.create(blueprint);
+   * await adapter.run();
+   * ```
    */
-  static create (options: AdapterOptions<IncomingBrowserEvent, OutgoingBrowserResponse>): BrowserAdapter {
-    return new this(options)
+  static create (blueprint: IBlueprint): BrowserAdapter {
+    return new this(blueprint)
   }
 
   /**
@@ -71,7 +72,7 @@ BrowserAdapterContext
   public async run<ExecutionResultType = undefined>(): Promise<ExecutionResultType> {
     await this.onStart()
 
-    const eventHandler = this.handlerResolver(this.blueprint) as LifecycleAdapterEventHandler<IncomingBrowserEvent, OutgoingBrowserResponse>
+    const eventHandler = this.resolveEventHandler()
 
     this.blueprint.get<string[]>('stone.adapter.events', []).forEach((eventName) => {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
@@ -80,7 +81,7 @@ BrowserAdapterContext
       })
     })
 
-    await this.onPrepare(eventHandler)
+    await this.executeEventHandlerHooks('onInit', eventHandler)
 
     return undefined as ExecutionResultType
   }
@@ -94,11 +95,11 @@ BrowserAdapterContext
    * @throws {BrowserAdapterError} If executed outside a Browser context (e.g., node).
    */
   protected async onStart (): Promise<void> {
-    if (window === undefined) {
+    if (isEmpty(window)) {
       throw new BrowserAdapterError('This `BrowserAdapter` must be used only in Browser context.')
     }
 
-    await super.onStart()
+    await this.executeHooks('onStart')
   }
 
   /**
@@ -124,11 +125,18 @@ BrowserAdapterContext
       resolver: (options) => RawResponseWrapper.create(options)
     })
 
-    return await this.sendEventThroughDestination(eventHandler, {
+    const context: BrowserAdapterContext = {
       rawEvent,
       executionContext,
       rawResponseBuilder,
       incomingEventBuilder
-    })
+    }
+
+    try {
+      return await this.sendEventThroughDestination(context, eventHandler)
+    } catch (error: any) {
+      const rawResponseBuilder = await this.handleError(error, context)
+      return await this.buildRawResponse({ ...context, rawResponseBuilder })
+    }
   }
 }

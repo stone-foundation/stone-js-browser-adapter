@@ -1,6 +1,6 @@
+import { IBlueprint } from '@stone-js/core'
 import { NextPipe } from '@stone-js/pipeline'
 import { BROWSER_PLATFORM } from '../constants'
-import { classMiddleware, IBlueprint } from '@stone-js/core'
 import { BrowserAdapterError } from '../errors/BrowserAdapterError'
 import { CookieCollection, CookieOptions } from '@stone-js/browser-core'
 import { BrowserAdapterResponseBuilder, BrowserAdapterContext } from '../declarations'
@@ -78,4 +78,4 @@ export class IncomingEventMiddleware {
 /**
  * Meta Middleware for processing incoming events.
  */
-export const MetaIncomingEventMiddleware = classMiddleware(IncomingEventMiddleware)
+export const MetaIncomingEventMiddleware = { module: IncomingEventMiddleware, isClass: true }

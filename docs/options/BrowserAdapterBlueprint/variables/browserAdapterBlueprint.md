@@ -8,7 +8,7 @@
 
 > `const` **browserAdapterBlueprint**: [`BrowserAdapterBlueprint`](../interfaces/BrowserAdapterBlueprint.md)
 
-Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:55](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/options/BrowserAdapterBlueprint.ts#L55)
+Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:55](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/options/BrowserAdapterBlueprint.ts#L55)
 
 Default blueprint configuration for the Browser Adapter.
 

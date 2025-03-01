@@ -59,7 +59,7 @@ describe('BrowserAdapter', () => {
     // @ts-expect-error
     adapter.sendEventThroughDestination = vi.fn()
     // @ts-expect-error
-    adapter.onPrepare = vi.fn()
+    adapter.onInit = vi.fn()
 
     const rawResponse = await adapter.run()
 
@@ -69,7 +69,7 @@ describe('BrowserAdapter', () => {
     expect(RawResponseWrapper.create).toHaveBeenCalledWith(expect.anything())
     expect(adapterOptions.blueprint.get).toHaveBeenCalledWith('stone.adapter.events', expect.any(Array))
     // @ts-expect-error
-    expect(adapter.onPrepare).toHaveBeenCalled()
+    expect(adapter.onInit).toHaveBeenCalled()
     // @ts-expect-error
     expect(adapter.sendEventThroughDestination).toHaveBeenCalled()
   })

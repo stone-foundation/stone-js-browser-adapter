@@ -8,7 +8,7 @@
 
 > **browserAdapterResolver**(`blueprint`): `IAdapter`
 
-Defined in: [browser-adapter/src/resolvers.ts:18](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/resolvers.ts#L18)
+Defined in: [browser-adapter/src/resolvers.ts:12](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/resolvers.ts#L12)
 
 Adapter resolver for generic Browser adapter.
 

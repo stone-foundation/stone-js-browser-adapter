@@ -6,7 +6,7 @@
 
 # Interface: BrowserAdapterConfig
 
-Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:26](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/options/BrowserAdapterBlueprint.ts#L26)
+Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:26](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/options/BrowserAdapterBlueprint.ts#L26)
 
 Represents the BrowserAdapterConfig configuration options for the application.
 
@@ -20,7 +20,7 @@ Represents the BrowserAdapterConfig configuration options for the application.
 
 > `optional` **adapter**: `Partial`\<`AdapterConfig`\>
 
-Defined in: core/dist/index.d.ts:500
+Defined in: core/dist/index.d.ts:501
 
 Current Adapter configurations for the application.
 This key allow you to specify the current adapter with the alias key.
@@ -35,7 +35,7 @@ This key allow you to specify the current adapter with the alias key.
 
 > **adapters**: [`BrowserAdapterAdapterConfig`](BrowserAdapterAdapterConfig.md)[]
 
-Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:27](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/options/BrowserAdapterBlueprint.ts#L27)
+Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:27](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/options/BrowserAdapterBlueprint.ts#L27)
 
 Adapter configurations for the application.
 
@@ -49,7 +49,7 @@ Adapter configurations for the application.
 
 > `optional` **aliases**: `Record`\<`string`, `any`\>
 
-Defined in: core/dist/index.d.ts:535
+Defined in: core/dist/index.d.ts:536
 
 Class aliases to be registered when the application starts.
 These aliases provide shorthand references to commonly used classes.
@@ -60,27 +60,11 @@ These aliases provide shorthand references to commonly used classes.
 
 ***
 
-### application?
-
-> `optional` **application**: `MetaApplication`
-
-Defined in: core/dist/index.d.ts:552
-
-The main application entry point module in declarative context.
-It is the class decorated with the @StoneApp() decorator.
-Note: It does not exist in imperative context.
-
-#### Inherited from
-
-`Partial.application`
-
-***
-
 ### browser
 
 > **browser**: `object`
 
-Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:28](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/options/BrowserAdapterBlueprint.ts#L28)
+Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:28](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/options/BrowserAdapterBlueprint.ts#L28)
 
 #### cookie
 
@@ -94,9 +78,9 @@ Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:28](https://
 
 ### builder?
 
-> `optional` **builder**: `BuilderConfig`
+> `optional` **builder**: `BuilderConfig`\<`any`\>
 
-Defined in: core/dist/index.d.ts:495
+Defined in: core/dist/index.d.ts:496
 
 Configuration options for building the application, including middleware and pipe priorities.
 
@@ -110,7 +94,7 @@ Configuration options for building the application, including middleware and pip
 
 > `optional` **debug**: `boolean`
 
-Defined in: core/dist/index.d.ts:479
+Defined in: core/dist/index.d.ts:475
 
 Determines if the application is in debug mode.
 When enabled, detailed error messages with stack traces will be shown.
@@ -125,7 +109,7 @@ When enabled, detailed error messages with stack traces will be shown.
 
 > `optional` **env**: `Environment`
 
-Defined in: core/dist/index.d.ts:474
+Defined in: core/dist/index.d.ts:470
 
 The current environment in which the application is running.
 Possible values are development, production, and test.
@@ -140,7 +124,7 @@ Possible values are development, production, and test.
 
 > `optional` **fallback\_locale**: `string`
 
-Defined in: core/dist/index.d.ts:491
+Defined in: core/dist/index.d.ts:487
 
 The fallback locale used when a translation for the default locale is unavailable.
 
@@ -150,27 +134,11 @@ The fallback locale used when a translation for the default locale is unavailabl
 
 ***
 
-### handler?
-
-> `optional` **handler**: `MixedEventHandler`\<`IncomingEvent`, `OutgoingResponse`\>
-
-Defined in: core/dist/index.d.ts:546
-
-The main handler function for the application.
-This is the main function that handles incoming requests.
-Every Stone.js application must have an handler function.
-
-#### Inherited from
-
-`Partial.handler`
-
-***
-
 ### kernel?
 
 > `optional` **kernel**: `KernelConfig`
 
-Defined in: core/dist/index.d.ts:508
+Defined in: core/dist/index.d.ts:509
 
 Global middleware settings for the application kernel.
 
@@ -180,11 +148,26 @@ Global middleware settings for the application kernel.
 
 ***
 
+### lifecycleHooks?
+
+> `optional` **lifecycleHooks**: `LifecycleHookType`\<`IBlueprint`\<`any`\>, `any`, `any`, `IncomingEvent`, `OutgoingResponse`\>
+
+Defined in: core/dist/index.d.ts:541
+
+Lifecycle hooks for the application.
+These hooks allow you to run custom code at different stages of the application lifecycle.
+
+#### Inherited from
+
+`Partial.lifecycleHooks`
+
+***
+
 ### listeners?
 
 > `optional` **listeners**: `MetaEventListener`[]
 
-Defined in: core/dist/index.d.ts:521
+Defined in: core/dist/index.d.ts:522
 
 Event listeners to be automatically registered when the application starts.
 This allows you to specify functions to listen for specific events.
@@ -199,7 +182,7 @@ This allows you to specify functions to listen for specific events.
 
 > `optional` **liveConfigurations**: `MixedConfiguration`\<`any`\>[]
 
-Defined in: core/dist/index.d.ts:558
+Defined in: core/dist/index.d.ts:547
 
 Live configurations are loaded at each request.
 By default, configurations are loaded once when the application starts.
@@ -215,7 +198,7 @@ This is useful for defining dynamic configurations that do not require a restart
 
 > `optional` **locale**: `string`
 
-Defined in: core/dist/index.d.ts:487
+Defined in: core/dist/index.d.ts:483
 
 The default locale for the application.
 
@@ -229,7 +212,7 @@ The default locale for the application.
 
 > `optional` **logger**: `LoggerConfig`
 
-Defined in: core/dist/index.d.ts:512
+Defined in: core/dist/index.d.ts:513
 
 Logging settings, including the logger instance and error reporting configurations.
 
@@ -243,7 +226,7 @@ Logging settings, including the logger instance and error reporting configuratio
 
 > `optional` **name**: `string`
 
-Defined in: core/dist/index.d.ts:469
+Defined in: core/dist/index.d.ts:465
 
 The name of the application.
 
@@ -255,9 +238,9 @@ The name of the application.
 
 ### providers?
 
-> `optional` **providers**: `MixedServiceProvider`\<`IncomingEvent`, `OutgoingResponse`\>[]
+> `optional` **providers**: `MixedServiceProvider`[]
 
-Defined in: core/dist/index.d.ts:530
+Defined in: core/dist/index.d.ts:531
 
 Service providers to be automatically loaded for each request to the application.
 
@@ -271,7 +254,7 @@ Service providers to be automatically loaded for each request to the application
 
 > `optional` **secret**: `string`
 
-Defined in: core/dist/index.d.ts:540
+Defined in: core/dist/index.d.ts:492
 
 A secret key used for encryption purposes throughout the application.
 This key should be kept secure.
@@ -286,7 +269,7 @@ This key should be kept secure.
 
 > `optional` **services**: `MetaService`[]
 
-Defined in: core/dist/index.d.ts:516
+Defined in: core/dist/index.d.ts:517
 
 Services to be automatically registered when the application starts.
 
@@ -300,7 +283,7 @@ Services to be automatically registered when the application starts.
 
 > `optional` **subscribers**: `MixedEventSubscriber`[]
 
-Defined in: core/dist/index.d.ts:526
+Defined in: core/dist/index.d.ts:527
 
 Subscribers to be automatically registered when the application starts.
 Subscribers are used for handling and responding to events.
@@ -315,7 +298,7 @@ Subscribers are used for handling and responding to events.
 
 > `optional` **timezone**: `string`
 
-Defined in: core/dist/index.d.ts:483
+Defined in: core/dist/index.d.ts:479
 
 The default timezone for the application.
 

@@ -8,6 +8,6 @@
 
 > **BrowserResponse**: `unknown`
 
-Defined in: [browser-adapter/src/declarations.ts:13](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/declarations.ts#L13)
+Defined in: [browser-adapter/src/declarations.ts:13](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/declarations.ts#L13)
 
 Represents a generic Browser response as a key-value pair.

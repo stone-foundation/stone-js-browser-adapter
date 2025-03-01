@@ -6,7 +6,7 @@
 
 # Interface: BrowserAdapterAdapterConfig
 
-Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:16](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/options/BrowserAdapterBlueprint.ts#L16)
+Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:16](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/options/BrowserAdapterBlueprint.ts#L16)
 
 Configuration interface for the Browser Adapter.
 
@@ -24,7 +24,7 @@ alias, resolver, middleware, hooks, and various adapter state flags.
 
 > `optional` **alias**: `string`
 
-Defined in: core/dist/index.d.ts:430
+Defined in: core/dist/index.d.ts:426
 
 The alias name for the adapter.
 This is a unique identifier used to reference the adapter.
@@ -40,7 +40,7 @@ Optional property.
 
 > `optional` **current**: `boolean`
 
-Defined in: core/dist/index.d.ts:436
+Defined in: core/dist/index.d.ts:432
 
 The current status identifier for the adapter.
 Used to indicate if this adapter instance is active or currently in use.
@@ -56,7 +56,7 @@ Optional property.
 
 > `optional` **default**: `boolean`
 
-Defined in: core/dist/index.d.ts:441
+Defined in: core/dist/index.d.ts:437
 
 Defines whether this adapter is the default adapter used by the application.
 Optional property.
@@ -71,7 +71,7 @@ Optional property.
 
 > **errorHandlers**: `Record`\<`string`, `MetaAdapterErrorHandler`\>
 
-Defined in: core/dist/index.d.ts:419
+Defined in: core/dist/index.d.ts:420
 
 Error handlers used to manage and report errors that occur within the adapter.
 These handlers can be used to customize error handling behavior and logging.
@@ -82,36 +82,35 @@ These handlers can be used to customize error handling behavior and logging.
 
 ***
 
+### eventHandlerResolver
+
+> **eventHandlerResolver**: `AdapterEventHandlerResolver`\<`IncomingEvent`, `OutgoingResponse`\>
+
+Defined in: core/dist/index.d.ts:415
+
+The event handler resolver used to create instances of the event handler.
+
+#### Inherited from
+
+`AdapterConfig.eventHandlerResolver`
+
+***
+
 ### events
 
 > **events**: `string`[]
 
-Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:20](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/options/BrowserAdapterBlueprint.ts#L20)
+Defined in: [browser-adapter/src/options/BrowserAdapterBlueprint.ts:20](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/options/BrowserAdapterBlueprint.ts#L20)
 
 Browser-specific events that the adapter should listen for.
 
 ***
 
-### hooks?
-
-> `optional` **hooks**: `AdapterHooks`
-
-Defined in: core/dist/index.d.ts:424
-
-Hooks that provide additional behavior during specific lifecycle events of the adapter.
-These hooks can be used to extend the adapter's functionality at various points.
-
-#### Inherited from
-
-`AdapterConfig.hooks`
-
-***
-
 ### middleware
 
-> **middleware**: `MixedPipe`\<`any`, `any`\>[]
+> **middleware**: `AdapterMixedPipeType`\<`AdapterContext`\<`any`, `any`, `any`\>, `any`\>[]
 
-Defined in: core/dist/index.d.ts:414
+Defined in: core/dist/index.d.ts:411
 
 The middleware used for processing incoming or outgoing data in the adapter.
 Middleware can modify or handle events at different stages of the adapter's lifecycle.
@@ -126,7 +125,7 @@ Middleware can modify or handle events at different stages of the adapter's life
 
 > **platform**: `string`
 
-Defined in: core/dist/index.d.ts:405
+Defined in: core/dist/index.d.ts:402
 
 The platform identifier for the adapter.
 This is used to categorize the adapter based on the environment or technology it supports.
@@ -141,7 +140,7 @@ This is used to categorize the adapter based on the environment or technology it
 
 > **resolver**: `AdapterResolver`
 
-Defined in: core/dist/index.d.ts:409
+Defined in: core/dist/index.d.ts:406
 
 The class type resolver used to create instances of the adapter.
 

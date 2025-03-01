@@ -6,7 +6,7 @@
 
 # Class: BrowserErrorHandler
 
-Defined in: [browser-adapter/src/BrowserErrorHandler.ts:14](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/BrowserErrorHandler.ts#L14)
+Defined in: [browser-adapter/src/BrowserErrorHandler.ts:22](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserErrorHandler.ts#L22)
 
 Class representing an BrowserErrorHandler.
 
@@ -20,7 +20,7 @@ Class representing an BrowserErrorHandler.
 
 > **new BrowserErrorHandler**(`options`): [`BrowserErrorHandler`](BrowserErrorHandler.md)
 
-Defined in: [browser-adapter/src/BrowserErrorHandler.ts:22](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/BrowserErrorHandler.ts#L22)
+Defined in: [browser-adapter/src/BrowserErrorHandler.ts:30](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserErrorHandler.ts#L30)
 
 Create an BrowserErrorHandler.
 
@@ -40,9 +40,9 @@ BrowserErrorHandler options.
 
 ### handle()
 
-> **handle**(`error`, `context`): `Promise`\<`unknown`\>
+> **handle**(`error`, `context`): `AdapterEventBuilderType`\<`unknown`\>
 
-Defined in: [browser-adapter/src/BrowserErrorHandler.ts:37](https://github.com/stonemjs/browser-adapter/blob/c3427cc529e8929bb73bcc39b402c0bfd995379e/src/BrowserErrorHandler.ts#L37)
+Defined in: [browser-adapter/src/BrowserErrorHandler.ts:41](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserErrorHandler.ts#L41)
 
 Handle an error.
 
@@ -62,9 +62,9 @@ The context of the adapter.
 
 #### Returns
 
-`Promise`\<`unknown`\>
+`AdapterEventBuilderType`\<`unknown`\>
 
-The raw response.
+The raw response builder.
 
 #### Implementation of
 

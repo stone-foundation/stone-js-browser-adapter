@@ -3,8 +3,8 @@ import { browserAdapterResolver } from '../resolvers'
 import { CookieOptions } from '@stone-js/browser-core'
 import { BrowserErrorHandler } from '../BrowserErrorHandler'
 import { adapterConfigMiddleware } from '../middleware/configMiddleware'
-import { AdapterConfig, AppConfig, StoneBlueprint } from '@stone-js/core'
 import { MetaIncomingEventMiddleware } from '../middleware/IncomingEventMiddleware'
+import { AdapterConfig, AppConfig, defaultKernelResolver, StoneBlueprint } from '@stone-js/core'
 
 /**
  * Configuration interface for the Browser Adapter.
@@ -64,14 +64,14 @@ export const browserAdapterBlueprint: BrowserAdapterBlueprint = {
     },
     adapters: [
       {
-        hooks: {},
         current: false,
         default: false,
         platform: BROWSER_PLATFORM,
-        resolver: browserAdapterResolver,
         middleware: [
           MetaIncomingEventMiddleware
         ],
+        resolver: browserAdapterResolver,
+        eventHandlerResolver: defaultKernelResolver,
         events: ['popstate', '@stonejs/router.navigate'],
         errorHandlers: {
           default: { module: BrowserErrorHandler, isClass: true }

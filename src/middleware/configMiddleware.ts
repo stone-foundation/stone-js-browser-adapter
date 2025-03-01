@@ -1,6 +1,6 @@
 import { BROWSER_PLATFORM } from '../constants'
 import { MetaPipe, NextPipe } from '@stone-js/pipeline'
-import { ClassType, ConfigContext, IBlueprint } from '@stone-js/core'
+import { ClassType, BlueprintContext, IBlueprint } from '@stone-js/core'
 import { OutgoingBrowserResponse, OutgoingBrowserResponseOptions } from '@stone-js/browser-core'
 
 /**
@@ -12,12 +12,12 @@ import { OutgoingBrowserResponse, OutgoingBrowserResponseOptions } from '@stone-
  *
  * @example
  * ```typescript
- * SetResponseResolverMiddleware(context, next)
+ * SetBrowserResponseResolverMiddleware(context, next)
  * ```
  */
-export const SetResponseResolverMiddleware = async (
-  context: ConfigContext<IBlueprint, ClassType>,
-  next: NextPipe<ConfigContext<IBlueprint, ClassType>, IBlueprint>
+export const SetBrowserResponseResolverMiddleware = async (
+  context: BlueprintContext<IBlueprint, ClassType>,
+  next: NextPipe<BlueprintContext<IBlueprint, ClassType>, IBlueprint>
 ): Promise<IBlueprint> => {
   if (context.blueprint.get<string>('stone.adapter.platform') === BROWSER_PLATFORM) {
     context.blueprint.set('stone.kernel.responseResolver', (options: OutgoingBrowserResponseOptions) => OutgoingBrowserResponse.create(options))
@@ -32,6 +32,6 @@ export const SetResponseResolverMiddleware = async (
  * This array defines a list of middleware pipes, each with a `pipe` function and a `priority`.
  * These pipes are executed in the order of their priority values, with lower values running first.
  */
-export const adapterConfigMiddleware: Array<MetaPipe<ConfigContext<IBlueprint, ClassType>, IBlueprint>> = [
-  { module: SetResponseResolverMiddleware, priority: 6 }
+export const adapterConfigMiddleware: Array<MetaPipe<BlueprintContext<IBlueprint, ClassType>, IBlueprint>> = [
+  { module: SetBrowserResponseResolverMiddleware, priority: 6 }
 ]
