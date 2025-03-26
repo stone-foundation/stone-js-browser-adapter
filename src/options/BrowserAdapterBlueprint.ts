@@ -2,7 +2,7 @@ import { BROWSER_PLATFORM } from '../constants'
 import { browserAdapterResolver } from '../resolvers'
 import { CookieOptions } from '@stone-js/browser-core'
 import { BrowserErrorHandler } from '../BrowserErrorHandler'
-import { adapterConfigMiddleware } from '../middleware/configMiddleware'
+import { metaAdapterBlueprintMiddleware } from '../middleware/BlueprintMiddleware'
 import { MetaIncomingEventMiddleware } from '../middleware/IncomingEventMiddleware'
 import { AdapterConfig, AppConfig, defaultKernelResolver, StoneBlueprint } from '@stone-js/core'
 
@@ -54,8 +54,8 @@ export interface BrowserAdapterBlueprint extends StoneBlueprint {
  */
 export const browserAdapterBlueprint: BrowserAdapterBlueprint = {
   stone: {
-    builder: {
-      middleware: adapterConfigMiddleware
+    blueprint: {
+      middleware: metaAdapterBlueprintMiddleware
     },
     browser: {
       cookie: {

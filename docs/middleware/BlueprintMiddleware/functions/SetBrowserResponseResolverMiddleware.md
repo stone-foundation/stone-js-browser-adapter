@@ -2,13 +2,13 @@
 
 ***
 
-[Browser Adapter Documentation](../../../modules.md) / [middleware/configMiddleware](../README.md) / SetBrowserResponseResolverMiddleware
+[Browser Adapter Documentation](../../../modules.md) / [middleware/BlueprintMiddleware](../README.md) / SetBrowserResponseResolverMiddleware
 
 # Function: SetBrowserResponseResolverMiddleware()
 
 > **SetBrowserResponseResolverMiddleware**(`context`, `next`): `Promise`\<`IBlueprint`\>
 
-Defined in: [browser-adapter/src/middleware/configMiddleware.ts:18](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/middleware/configMiddleware.ts#L18)
+Defined in: browser-adapter/src/middleware/BlueprintMiddleware.ts:18
 
 Middleware to dynamically set response resolver for adapter.
 

@@ -6,7 +6,7 @@
 
 # Class: BrowserAdapter
 
-Defined in: [browser-adapter/src/BrowserAdapter.ts:39](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserAdapter.ts#L39)
+Defined in: [browser-adapter/src/BrowserAdapter.ts:39](https://github.com/stonemjs/browser-adapter/blob/6ef18a8abc30e2ff2b6f68150987322f98457246/src/BrowserAdapter.ts#L39)
 
 Browser Adapter for Stone.js.
 
@@ -69,7 +69,7 @@ await adapter.run();
 
 > `protected` **new BrowserAdapter**(`blueprint`): [`BrowserAdapter`](BrowserAdapter.md)
 
-Defined in: core/dist/index.d.ts:2651
+Defined in: core/dist/index.d.ts:2751
 
 Create an Adapter.
 
@@ -95,7 +95,7 @@ The blueprint to create the adapter.
 
 > `protected` `readonly` **blueprint**: `IBlueprint`\<`any`\>
 
-Defined in: core/dist/index.d.ts:2642
+Defined in: core/dist/index.d.ts:2742
 
 #### Inherited from
 
@@ -107,7 +107,7 @@ Defined in: core/dist/index.d.ts:2642
 
 > `protected` `readonly` **hooks**: `AdapterHookType`\<[`BrowserAdapterContext`](../../declarations/type-aliases/BrowserAdapterContext.md), `unknown`\>
 
-Defined in: core/dist/index.d.ts:2643
+Defined in: core/dist/index.d.ts:2743
 
 #### Inherited from
 
@@ -119,7 +119,7 @@ Defined in: core/dist/index.d.ts:2643
 
 > `protected` `readonly` **middleware**: `AdapterMixedPipeType`\<[`BrowserAdapterContext`](../../declarations/type-aliases/BrowserAdapterContext.md), `unknown`\>[]
 
-Defined in: core/dist/index.d.ts:2644
+Defined in: core/dist/index.d.ts:2744
 
 #### Inherited from
 
@@ -131,7 +131,7 @@ Defined in: core/dist/index.d.ts:2644
 
 > `protected` `readonly` **resolvedErrorHandlers**: `Record`\<`string`, `IAdapterErrorHandler`\<[`BrowserEvent`](../../declarations/type-aliases/BrowserEvent.md), `unknown`, `Window` & *typeof* `globalThis`\>\>
 
-Defined in: core/dist/index.d.ts:2645
+Defined in: core/dist/index.d.ts:2745
 
 #### Inherited from
 
@@ -143,7 +143,7 @@ Defined in: core/dist/index.d.ts:2645
 
 > `protected` **buildRawResponse**(`context`, `eventHandler`?): `Promise`\<`unknown`\>
 
-Defined in: core/dist/index.d.ts:2705
+Defined in: core/dist/index.d.ts:2805
 
 Build the raw response.
 
@@ -177,7 +177,7 @@ The raw response wrapper.
 
 > `protected` **eventListener**(`eventHandler`, `rawEvent`, `executionContext`): `Promise`\<`unknown`\>
 
-Defined in: [browser-adapter/src/BrowserAdapter.ts:115](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserAdapter.ts#L115)
+Defined in: [browser-adapter/src/BrowserAdapter.ts:115](https://github.com/stonemjs/browser-adapter/blob/6ef18a8abc30e2ff2b6f68150987322f98457246/src/BrowserAdapter.ts#L115)
 
 Processes an incoming Browser event.
 
@@ -214,7 +214,7 @@ A promise resolving to the processed `RawResponse`.
 
 > `protected` **executeEventHandlerHooks**(`hook`, `eventHandler`): `Promise`\<`void`\>
 
-Defined in: core/dist/index.d.ts:2733
+Defined in: core/dist/index.d.ts:2833
 
 Execute the event handler lifecycle hooks.
 
@@ -246,7 +246,7 @@ The event handler to be run.
 
 > `protected` **executeHooks**(`name`, `context`?, `error`?): `Promise`\<`void`\>
 
-Defined in: core/dist/index.d.ts:2741
+Defined in: core/dist/index.d.ts:2841
 
 Execute adapter lifecycle hooks.
 
@@ -284,7 +284,7 @@ The error to handle.
 
 > `protected` **handleError**(`error`, `context`): `Promise`\<`AdapterEventBuilderType`\<`unknown`\>\>
 
-Defined in: core/dist/index.d.ts:2697
+Defined in: core/dist/index.d.ts:2797
 
 Handle error.
 
@@ -318,7 +318,7 @@ The raw response.
 
 > `protected` **handleEvent**(`context`, `eventHandler`): `Promise`\<`IAdapterEventBuilder`\<`RawResponseOptions`, `IRawResponseWrapper`\<`unknown`\>\>\>
 
-Defined in: core/dist/index.d.ts:2689
+Defined in: core/dist/index.d.ts:2789
 
 Handle the event.
 
@@ -352,7 +352,7 @@ The raw response wrapper.
 
 > `protected` **makePipelineOptions**(): `PipelineOptions`\<[`BrowserAdapterContext`](../../declarations/type-aliases/BrowserAdapterContext.md), `AdapterEventBuilderType`\<`unknown`\>\>
 
-Defined in: core/dist/index.d.ts:2711
+Defined in: core/dist/index.d.ts:2811
 
 Create pipeline options for the Adapter.
 
@@ -372,7 +372,7 @@ The pipeline options for transforming the event.
 
 > `protected` **onStart**(): `Promise`\<`void`\>
 
-Defined in: [browser-adapter/src/BrowserAdapter.ts:97](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserAdapter.ts#L97)
+Defined in: [browser-adapter/src/BrowserAdapter.ts:97](https://github.com/stonemjs/browser-adapter/blob/6ef18a8abc30e2ff2b6f68150987322f98457246/src/BrowserAdapter.ts#L97)
 
 Initializes the adapter and validates its execution context.
 
@@ -393,7 +393,7 @@ If executed outside a Browser context (e.g., node).
 
 > `protected` **resolveErrorHandler**(`error`): `IAdapterErrorHandler`\<[`BrowserEvent`](../../declarations/type-aliases/BrowserEvent.md), `unknown`, `Window` & *typeof* `globalThis`\>
 
-Defined in: core/dist/index.d.ts:2726
+Defined in: core/dist/index.d.ts:2826
 
 Get the error handler for the given error.
 
@@ -425,7 +425,7 @@ IntegrationError
 
 > `protected` **resolveEventHandler**(): `AdapterEventHandlerType`\<`IncomingBrowserEvent`, `OutgoingBrowserResponse`\>
 
-Defined in: core/dist/index.d.ts:2718
+Defined in: core/dist/index.d.ts:2818
 
 Get the event handler for the adapter.
 
@@ -449,7 +449,7 @@ If the event handler is missing.
 
 > **run**\<`ExecutionResultType`\>(): `Promise`\<`ExecutionResultType`\>
 
-Defined in: [browser-adapter/src/BrowserAdapter.ts:72](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserAdapter.ts#L72)
+Defined in: [browser-adapter/src/BrowserAdapter.ts:72](https://github.com/stonemjs/browser-adapter/blob/6ef18a8abc30e2ff2b6f68150987322f98457246/src/BrowserAdapter.ts#L72)
 
 Executes the adapter and provides an Browser-compatible handler function.
 
@@ -478,7 +478,7 @@ If used outside the Browser environment.
 
 > `protected` **sendEventThroughDestination**(`context`, `eventHandler`): `Promise`\<`unknown`\>
 
-Defined in: core/dist/index.d.ts:2681
+Defined in: core/dist/index.d.ts:2781
 
 Send the raw event through the destination.
 
@@ -516,7 +516,7 @@ IntegrationError
 
 > `protected` **validateContextAndEventHandler**(`context`, `eventHandler`): `void`
 
-Defined in: core/dist/index.d.ts:2749
+Defined in: core/dist/index.d.ts:2849
 
 Validate the context and event handler.
 
@@ -552,7 +552,7 @@ IntegrationError
 
 > `static` **create**(`blueprint`): [`BrowserAdapter`](BrowserAdapter.md)
 
-Defined in: [browser-adapter/src/BrowserAdapter.ts:60](https://github.com/stonemjs/browser-adapter/blob/d2a6c7f067a005360bdac09297f0863b704b814a/src/BrowserAdapter.ts#L60)
+Defined in: [browser-adapter/src/BrowserAdapter.ts:60](https://github.com/stonemjs/browser-adapter/blob/6ef18a8abc30e2ff2b6f68150987322f98457246/src/BrowserAdapter.ts#L60)
 
 Creates an instance of the `BrowserAdapter`.
 

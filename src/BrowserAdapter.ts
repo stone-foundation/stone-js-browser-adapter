@@ -1,7 +1,7 @@
 
 import { RawResponseWrapper } from './RawResponseWrapper'
 import { BrowserAdapterError } from './errors/BrowserAdapterError'
-import { Adapter, AdapterEventBuilder, AdapterEventHandlerType, IBlueprint, isEmpty } from '@stone-js/core'
+import { Adapter, AdapterEventBuilder, AdapterEventHandlerType, IBlueprint } from '@stone-js/core'
 import { IncomingBrowserEvent, IncomingBrowserEventOptions, OutgoingBrowserResponse } from '@stone-js/browser-core'
 import { BrowserContext, BrowserEvent, BrowserResponse, BrowserAdapterContext, RawBrowserResponseOptions } from './declarations'
 
@@ -95,7 +95,7 @@ BrowserAdapterContext
    * @throws {BrowserAdapterError} If executed outside a Browser context (e.g., node).
    */
   protected async onStart (): Promise<void> {
-    if (isEmpty(window)) {
+    if (typeof window === 'undefined') {
       throw new BrowserAdapterError('This `BrowserAdapter` must be used only in Browser context.')
     }
 
