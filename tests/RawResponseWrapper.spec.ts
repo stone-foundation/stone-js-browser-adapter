@@ -1,30 +1,31 @@
-import { BrowserResponse } from '../src/declarations'
 import { RawResponseWrapper } from '../src/RawResponseWrapper'
+import { RawBrowserResponseOptions } from '../src/declarations'
 
 describe('RawResponseWrapper', () => {
-  let mockResponse: BrowserResponse
+  let mockResponse: RawBrowserResponseOptions
 
   beforeEach(() => {
     // Mock the ServerResponse object
     mockResponse = {
-      body: 'Hello, world!'
+      render: vi.fn().mockReturnValue('Hello, world!')
     }
   })
 
-  it('should set status code and message when options are provided', () => {
+  it('should set status code and message when options are provided', async () => {
     const wrapper = RawResponseWrapper.create(mockResponse)
 
-    const rawResponse = wrapper.respond()
+    const rawResponse = await wrapper.respond()
 
-    expect(rawResponse).toEqual(mockResponse)
+    expect(rawResponse).toEqual('Hello, world!')
+    expect(mockResponse.render).toHaveBeenCalled()
   })
 
-  it('should handle missing options gracefully', () => {
+  it('should handle missing options gracefully', async () => {
+    // @ts-expect-error
     const wrapper = RawResponseWrapper.create({})
 
-    const rawResponse = wrapper.respond()
+    const rawResponse = await wrapper.respond()
 
-    expect(rawResponse).not.toEqual(mockResponse)
-    expect(rawResponse).toEqual({})
+    expect(rawResponse).toBeUndefined()
   })
 })

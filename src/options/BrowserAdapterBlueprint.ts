@@ -66,6 +66,7 @@ export const browserAdapterBlueprint: BrowserAdapterBlueprint = {
       {
         current: false,
         default: false,
+        variant: 'browser',
         platform: BROWSER_PLATFORM,
         middleware: [
           MetaIncomingEventMiddleware

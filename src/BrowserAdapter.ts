@@ -1,4 +1,4 @@
-
+import { NAVIGATION_EVENT } from './constants'
 import { RawResponseWrapper } from './RawResponseWrapper'
 import { BrowserAdapterError } from './errors/BrowserAdapterError'
 import { Adapter, AdapterEventBuilder, AdapterEventHandlerType, IBlueprint } from '@stone-js/core'
@@ -82,6 +82,9 @@ BrowserAdapterContext
     })
 
     await this.executeEventHandlerHooks('onInit', eventHandler)
+
+    // Execute the event handler once when the adapter starts
+    await this.eventListener(eventHandler, new Event(NAVIGATION_EVENT), window)
 
     return undefined as ExecutionResultType
   }

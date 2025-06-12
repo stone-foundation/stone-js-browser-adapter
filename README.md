@@ -1,6 +1,6 @@
 # Stone.js: Browser Adapters
 
-[![npm](https://img.shields.io/npm/l/@stone-js/browser-adapter)](https://opensource.org/licenses/Apache-2.0)
+[![npm](https://img.shields.io/npm/l/@stone-js/browser-core)](https://opensource.org/licenses/MIT)
 [![npm](https://img.shields.io/npm/v/@stone-js/browser-adapter)](https://www.npmjs.com/package/@stone-js/browser-adapter)
 [![npm](https://img.shields.io/npm/dm/@stone-js/browser-adapter)](https://www.npmjs.com/package/@stone-js/browser-adapter)
 ![Maintenance](https://img.shields.io/maintenance/yes/2025)
@@ -12,7 +12,7 @@ Stone.js Browser Adapters with typings.
 
 ---
 
-Get started with the [documentation](https://stonejs.com/docs/adapters/browser-adapter).
+Get started with the [documentation](https://stonejs.com/docs/architecture/adapter.html).
 
 
 ## Contributing
