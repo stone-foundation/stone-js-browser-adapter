@@ -1,10 +1,11 @@
-import { NextPipe } from '@stone-js/pipeline'
-import { CookieCollection } from '../../src/cookies/CookieCollection'
+import { NextMiddleware } from '@stone-js/core'
+import { BROWSER_PLATFORM } from '../../src/constants'
+import { CookieCollection } from '@stone-js/browser-core'
 import { BrowserAdapterError } from '../../src/errors/BrowserAdapterError'
 import { IncomingEventMiddleware } from '../../src/middleware/IncomingEventMiddleware'
 import { BrowserAdapterContext, BrowserAdapterResponseBuilder } from '../../src/declarations'
 
-vi.mock('../../src/cookies/CookieCollection', () => ({
+vi.mock('@stone-js/browser-core', () => ({
   CookieCollection: {
     create: vi.fn()
   }
@@ -14,7 +15,7 @@ describe('IncomingEventMiddleware', () => {
   let mockBlueprint: any
   let middleware: IncomingEventMiddleware
   let mockContext: BrowserAdapterContext
-  let next: NextPipe<BrowserAdapterContext, BrowserAdapterResponseBuilder>
+  let next: NextMiddleware<BrowserAdapterContext, BrowserAdapterResponseBuilder>
 
   beforeEach(() => {
     mockBlueprint = {
@@ -70,8 +71,8 @@ describe('IncomingEventMiddleware', () => {
     expect(mockContext.incomingEventBuilder?.add).toHaveBeenCalledWith('url', expect.any(URL))
     expect(mockContext.incomingEventBuilder?.add).toHaveBeenCalledWith('metadata', expect.any(Object))
     expect(mockContext.incomingEventBuilder?.add).toHaveBeenCalledWith('cookies', { testCookie: 'value' })
-    expect(mockContext.incomingEventBuilder?.add).toHaveBeenCalledWith('source', mockContext.executionContext)
     expect(mockContext.incomingEventBuilder?.add).toHaveBeenCalledWith('queryString', mockContext.executionContext.location.search)
+    expect(mockContext.incomingEventBuilder?.add).toHaveBeenCalledWith('source', expect.objectContaining({ platform: BROWSER_PLATFORM }))
   })
 
   it('should retrieve cookie options from blueprint', () => {
@@ -79,6 +80,6 @@ describe('IncomingEventMiddleware', () => {
     const cookieOptions = middleware.getCookieOptions()
 
     expect(cookieOptions).toEqual({})
-    expect(mockBlueprint.get).toHaveBeenCalledWith('stone.http.cookie.options', {})
+    expect(mockBlueprint.get).toHaveBeenCalledWith('stone.browser.cookie.options', {})
   })
 })

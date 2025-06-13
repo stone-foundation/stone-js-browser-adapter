@@ -1,8 +1,10 @@
 import { BROWSER_PLATFORM } from '../constants'
 import { browserAdapterResolver } from '../resolvers'
+import { CookieOptions } from '@stone-js/browser-core'
 import { BrowserErrorHandler } from '../BrowserErrorHandler'
-import { AdapterConfig, StoneBlueprint } from '@stone-js/core'
-import { IncomingEventMiddleware } from '../middleware/IncomingEventMiddleware'
+import { metaAdapterBlueprintMiddleware } from '../middleware/BlueprintMiddleware'
+import { MetaIncomingEventMiddleware } from '../middleware/IncomingEventMiddleware'
+import { AdapterConfig, AppConfig, defaultKernelResolver, StoneBlueprint } from '@stone-js/core'
 
 /**
  * Configuration interface for the Browser Adapter.
@@ -11,11 +13,23 @@ import { IncomingEventMiddleware } from '../middleware/IncomingEventMiddleware'
  * customizable options specific to the Browser platform. This includes
  * alias, resolver, middleware, hooks, and various adapter state flags.
  */
-export interface BrowserAdapterConfig extends AdapterConfig {
+export interface BrowserAdapterAdapterConfig extends AdapterConfig {
   /**
    * Browser-specific events that the adapter should listen for.
    */
   events: string[]
+}
+
+/**
+ * Represents the BrowserAdapterConfig configuration options for the application.
+ */
+export interface BrowserAdapterConfig extends Partial<AppConfig> {
+  adapters: BrowserAdapterAdapterConfig[]
+  browser: {
+    cookie: {
+      options: CookieOptions
+    }
+  }
 }
 
 /**
@@ -26,9 +40,7 @@ export interface BrowserAdapterConfig extends AdapterConfig {
  * a `stone` object with an array of `BrowserAdapterConfig` items.
  */
 export interface BrowserAdapterBlueprint extends StoneBlueprint {
-  stone: {
-    adapters: BrowserAdapterConfig[]
-  }
+  stone: BrowserAdapterConfig
 }
 
 /**
@@ -42,20 +54,29 @@ export interface BrowserAdapterBlueprint extends StoneBlueprint {
  */
 export const browserAdapterBlueprint: BrowserAdapterBlueprint = {
   stone: {
+    blueprint: {
+      middleware: metaAdapterBlueprintMiddleware
+    },
+    browser: {
+      cookie: {
+        options: {}
+      }
+    },
     adapters: [
       {
+        current: false,
+        default: false,
+        variant: 'browser',
         platform: BROWSER_PLATFORM,
-        resolver: browserAdapterResolver,
         middleware: [
-          { priority: 0, pipe: IncomingEventMiddleware }
+          MetaIncomingEventMiddleware
         ],
-        hooks: {},
+        resolver: browserAdapterResolver,
+        eventHandlerResolver: defaultKernelResolver,
         events: ['popstate', '@stonejs/router.navigate'],
         errorHandlers: {
-          default: BrowserErrorHandler
-        },
-        current: false,
-        default: false
+          default: { module: BrowserErrorHandler, isClass: true }
+        }
       }
     ]
   }

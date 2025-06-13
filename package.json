@@ -1,16 +1,16 @@
 {
   "name": "@stone-js/browser-adapter",
   "version": "0.0.2",
-  "description": "Stone.js Browser adapter",
+  "description": "Browser adapter for Stone.js. Enables SPA runtime support, unified event handling, and cookie management in the browser, part of the Continuum Architecture.",
   "author": "Mr. Stone <evensstone@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/stonemjs/browser-adapter.git"
+    "url": "git+ssh://git@github.com/stone-foundation/stone-js-browser-adapter.git"
   },
-  "homepage": "https://github.com/stonemjs/browser-adapter#readme",
+  "homepage": "https://stonejs.dev",
   "bugs": {
-    "url": "https://github.com/stonemjs/browser-adapter/issues"
+    "url": "https://github.com/stone-foundation/stone-js-browser-adapter/issues"
   },
   "keywords": [
     "browser",
@@ -51,40 +51,41 @@
     "prepare": "husky"
   },
   "peerDependencies": {
-    "@stone-js/core": "^0.0.36",
-    "@stone-js/pipeline": "^0.0.46"
+    "@stone-js/core": "^0.1.1",
+    "@stone-js/browser-core": "^0.1.1"
+  },
+  "dependencies": {
+    "cookie": "^1.0.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.6.1",
-    "@commitlint/config-conventional": "^19.6.0",
-    "@rollup/plugin-commonjs": "^28.0.2",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-multi-entry": "^6.0.1",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.1",
-    "@types/node": "^22.9.0",
-    "@vitest/coverage-v8": "^2.1.4",
-    "husky": "^9.1.6",
+    "@types/node": "^24.0.0",
+    "@vitest/coverage-v8": "^3.2.3",
+    "husky": "^9.1.7",
     "rimraf": "^6.0.1",
-    "rollup": "^4.1.5",
-    "rollup-plugin-delete": "^2.1.0",
-    "rollup-plugin-dts": "^6.1.1",
+    "rollup": "^4.43.0",
+    "rollup-plugin-delete": "^3.0.1",
+    "rollup-plugin-dts": "^6.2.1",
     "rollup-plugin-node-externals": "^8.0.0",
     "ts-standard": "^12.0.2",
     "tslib": "^2.8.1",
-    "typedoc": "^0.27.6",
-    "typedoc-plugin-markdown": "^4.4.1",
+    "typedoc": "^0.28.5",
+    "typedoc-plugin-markdown": "^4.6.4",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.4"
+    "vitest": "^3.2.3"
   },
   "ts-standard": {
     "globals": [
       "it",
+      "test",
       "expect",
       "describe",
       "beforeEach"
     ]
-  },
-  "dependencies": {
-    "cookie": "^1.0.2"
   }
 }

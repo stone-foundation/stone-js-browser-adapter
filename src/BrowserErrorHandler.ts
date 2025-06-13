@@ -1,11 +1,19 @@
+import {
+  ILogger,
+  IBlueprint,
+  LoggerResolver,
+  AdapterErrorContext,
+  IAdapterErrorHandler,
+  defaultLoggerResolver,
+  AdapterEventBuilderType
+} from '@stone-js/core'
 import { BrowserContext, BrowserEvent, BrowserResponse } from './declarations'
-import { IntegrationError, AdapterErrorContext, IAdapterErrorHandler, ILogger } from '@stone-js/core'
 
 /**
  * BrowserErrorHandler options.
  */
 export interface BrowserErrorHandlerOptions {
-  logger: ILogger
+  blueprint: IBlueprint
 }
 
 /**
@@ -19,12 +27,8 @@ export class BrowserErrorHandler implements IAdapterErrorHandler<BrowserEvent, B
    *
    * @param options - BrowserErrorHandler options.
    */
-  constructor ({ logger }: BrowserErrorHandlerOptions) {
-    if (logger === undefined) {
-      throw new IntegrationError('Logger is required to create an BrowserErrorHandler instance.')
-    }
-
-    this.logger = logger
+  constructor ({ blueprint }: BrowserErrorHandlerOptions) {
+    this.logger = blueprint.get<LoggerResolver>('stone.logger.resolver', defaultLoggerResolver)(blueprint)
   }
 
   /**
@@ -32,10 +36,14 @@ export class BrowserErrorHandler implements IAdapterErrorHandler<BrowserEvent, B
    *
    * @param error - The error to handle.
    * @param context - The context of the adapter.
-   * @returns The raw response.
+   * @returns The raw response builder.
    */
-  public async handle (error: Error, context: AdapterErrorContext<BrowserEvent, BrowserResponse, BrowserContext>): Promise<BrowserResponse> {
+  public handle (
+    error: Error,
+    context: AdapterErrorContext<BrowserEvent, BrowserResponse, BrowserContext>
+  ): AdapterEventBuilderType<BrowserResponse> {
     this.logger.error(error.message, { error })
-    return await context.rawResponseBuilder.build().respond()
+
+    return context.rawResponseBuilder
   }
 }

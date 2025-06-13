@@ -1,10 +1,9 @@
-
+import { NAVIGATION_EVENT } from './constants'
 import { RawResponseWrapper } from './RawResponseWrapper'
 import { BrowserAdapterError } from './errors/BrowserAdapterError'
-import { OutgoingBrowserResponse } from './events/OutgoingBrowserResponse'
-import { IncomingBrowserEvent, IncomingBrowserEventOptions } from './events/IncomingBrowserEvent'
-import { BrowserContext, BrowserEvent, BrowserResponse, BrowserAdapterContext } from './declarations'
-import { Adapter, AdapterEventBuilder, AdapterOptions, EventHandler, LifecycleEventHandler, RawResponseOptions } from '@stone-js/core'
+import { Adapter, AdapterEventBuilder, AdapterEventHandlerType, IBlueprint } from '@stone-js/core'
+import { IncomingBrowserEvent, IncomingBrowserEventOptions, OutgoingBrowserResponse } from '@stone-js/browser-core'
+import { BrowserContext, BrowserEvent, BrowserResponse, BrowserAdapterContext, RawBrowserResponseOptions } from './declarations'
 
 /**
  * Browser Adapter for Stone.js.
@@ -49,16 +48,17 @@ BrowserAdapterContext
   /**
    * Creates an instance of the `BrowserAdapter`.
    *
-   * This factory method allows developers to instantiate the adapter with
-   * the necessary configuration options, ensuring it is correctly set up for
-   * Browser usage.
+   * @param blueprint - The application blueprint.
+   * @returns A new instance of `BrowserAdapter`.
    *
-   * @param options - The configuration options for the adapter, including
-   *                  handler resolver, error handling, and other settings.
-   * @returns A fully initialized `BrowserAdapter` instance.
+   * @example
+   * ```typescript
+   * const adapter = BrowserAdapter.create(blueprint);
+   * await adapter.run();
+   * ```
    */
-  static create (options: AdapterOptions<IncomingBrowserEvent, OutgoingBrowserResponse>): BrowserAdapter {
-    return new this(options)
+  static create (blueprint: IBlueprint): BrowserAdapter {
+    return new this(blueprint)
   }
 
   /**
@@ -70,9 +70,9 @@ BrowserAdapterContext
    * @throws {BrowserAdapterError} If used outside the Browser environment.
    */
   public async run<ExecutionResultType = undefined>(): Promise<ExecutionResultType> {
-    await this.onInit()
+    await this.onStart()
 
-    const eventHandler = this.handlerResolver(this.blueprint) as LifecycleEventHandler<IncomingBrowserEvent, OutgoingBrowserResponse>
+    const eventHandler = this.resolveEventHandler()
 
     this.blueprint.get<string[]>('stone.adapter.events', []).forEach((eventName) => {
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
@@ -81,7 +81,10 @@ BrowserAdapterContext
       })
     })
 
-    await this.onPrepare(eventHandler)
+    await this.executeEventHandlerHooks('onInit', eventHandler)
+
+    // Execute the event handler once when the adapter starts
+    await this.eventListener(eventHandler, new Event(NAVIGATION_EVENT), window)
 
     return undefined as ExecutionResultType
   }
@@ -94,12 +97,12 @@ BrowserAdapterContext
    *
    * @throws {BrowserAdapterError} If executed outside a Browser context (e.g., node).
    */
-  protected async onInit (): Promise<void> {
-    if (window === undefined) {
+  protected async onStart (): Promise<void> {
+    if (typeof window === 'undefined') {
       throw new BrowserAdapterError('This `BrowserAdapter` must be used only in Browser context.')
     }
 
-    await super.onInit()
+    await this.executeHooks('onStart')
   }
 
   /**
@@ -112,20 +115,31 @@ BrowserAdapterContext
    * @param executionContext - The Browser execution context for the event.
    * @returns A promise resolving to the processed `RawResponse`.
    */
-  protected async eventListener (eventHandler: EventHandler<IncomingBrowserEvent, OutgoingBrowserResponse>, rawEvent: BrowserEvent, executionContext: BrowserContext): Promise<BrowserResponse> {
+  protected async eventListener (
+    eventHandler: AdapterEventHandlerType<IncomingBrowserEvent, OutgoingBrowserResponse>,
+    rawEvent: BrowserEvent,
+    executionContext: BrowserContext
+  ): Promise<BrowserResponse> {
     const incomingEventBuilder = AdapterEventBuilder.create<IncomingBrowserEventOptions, IncomingBrowserEvent>({
       resolver: (options) => IncomingBrowserEvent.create(options)
     })
 
-    const rawResponseBuilder = AdapterEventBuilder.create<RawResponseOptions, RawResponseWrapper>({
+    const rawResponseBuilder = AdapterEventBuilder.create<RawBrowserResponseOptions, RawResponseWrapper>({
       resolver: (options) => RawResponseWrapper.create(options)
     })
 
-    return await this.sendEventThroughDestination(eventHandler, {
+    const context: BrowserAdapterContext = {
       rawEvent,
       executionContext,
       rawResponseBuilder,
       incomingEventBuilder
-    })
+    }
+
+    try {
+      return await this.sendEventThroughDestination(context, eventHandler)
+    } catch (error: any) {
+      const rawResponseBuilder = await this.handleError(error, context)
+      return await this.buildRawResponse({ ...context, rawResponseBuilder })
+    }
   }
 }

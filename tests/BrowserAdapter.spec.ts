@@ -1,40 +1,43 @@
 import { BrowserAdapter } from '../src/BrowserAdapter'
+import { IncomingBrowserEvent } from '@stone-js/browser-core'
 import { RawResponseWrapper } from '../src/RawResponseWrapper'
-import { AdapterEventBuilder, AdapterOptions } from '@stone-js/core'
+import { AdapterEventBuilder, IBlueprint } from '@stone-js/core'
 import { BrowserAdapterError } from '../src/errors/BrowserAdapterError'
-import { IncomingBrowserEvent } from '../src/events/IncomingBrowserEvent'
-import { OutgoingBrowserResponse } from '../src/events/OutgoingBrowserResponse'
+
+vi.mock('@stone-js/core', async () => {
+  const actual = await vi.importActual<any>('@stone-js/core')
+  return {
+    ...actual,
+    AdapterEventBuilder: {
+      create: vi.fn().mockImplementation(({ resolver }) => ({ resolver }))
+    }
+  }
+})
 
 vi.mock('../src/RawResponseWrapper', () => ({
   RawResponseWrapper: {
-    create: vi.fn()
+    create: vi.fn().mockImplementation((options) => ({ ...options, __response: true }))
   }
 }))
 
 describe('BrowserAdapter', () => {
-  let adapterOptions: AdapterOptions<IncomingBrowserEvent, OutgoingBrowserResponse>
+  let blueprint: IBlueprint
+  let adapter: BrowserAdapter
 
   beforeEach(() => {
-    adapterOptions = {
-      hooks: {},
-      blueprint: {
-        get: vi.fn()
-      },
-      handlerResolver: vi.fn(),
-      logger: {
-        error: vi.fn()
-      }
-    } as any
+    blueprint = {
+      get: vi.fn(),
+      set: vi.fn()
+    } as unknown as IBlueprint
+
+    adapter = BrowserAdapter.create(blueprint)
   })
 
   it('should create an instance with correct https configuration', () => {
-    const adapter = BrowserAdapter.create(adapterOptions)
     expect(adapter).toBeInstanceOf(BrowserAdapter)
   })
 
   it('should throw error when used outside the Browser context', async () => {
-    const adapter = BrowserAdapter.create(adapterOptions)
-
     // @ts-expect-error - Simulate browser context
     global.window = undefined
 
@@ -44,23 +47,24 @@ describe('BrowserAdapter', () => {
   it('should call the appropriate event listener on request', async () => {
     global.window = {} as any // Simulate browser context
 
-    const adapter = BrowserAdapter.create(adapterOptions)
+    const executeHooks = vi.spyOn(adapter as any, 'executeHooks').mockResolvedValue(undefined)
+
+    vi.spyOn(adapter as any, 'resolveEventHandler').mockReturnValue(vi.fn())
+    vi.spyOn(adapter as any, 'executeEventHandlerHooks').mockResolvedValue(undefined)
 
     RawResponseWrapper.create = vi.fn()
     IncomingBrowserEvent.create = vi.fn()
     AdapterEventBuilder.create = vi.fn((options) => options.resolver({}))
 
-    adapterOptions.blueprint.get = vi.fn(() => ['@stonejs/router.navigate'])
+    blueprint.get = vi.fn(() => ['@stonejs/router.navigate'])
 
     /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
-    window.addEventListener = vi.fn(async (eventName, listener) => {
+    window.addEventListener = vi.fn(async (_eventName, listener) => {
       await listener(new Event('@stonejs/router.navigate'))
     })
 
     // @ts-expect-error
     adapter.sendEventThroughDestination = vi.fn()
-    // @ts-expect-error
-    adapter.onPrepare = vi.fn()
 
     const rawResponse = await adapter.run()
 
@@ -68,10 +72,24 @@ describe('BrowserAdapter', () => {
     expect(window.addEventListener).toHaveBeenCalled()
     expect(AdapterEventBuilder.create).toHaveBeenCalled()
     expect(RawResponseWrapper.create).toHaveBeenCalledWith(expect.anything())
-    expect(adapterOptions.blueprint.get).toHaveBeenCalledWith('stone.adapter.events', expect.any(Array))
-    // @ts-expect-error
-    expect(adapter.onPrepare).toHaveBeenCalled()
+    expect(blueprint.get).toHaveBeenCalledWith('stone.adapter.events', expect.any(Array))
     // @ts-expect-error
     expect(adapter.sendEventThroughDestination).toHaveBeenCalled()
+    expect(executeHooks).toHaveBeenCalledWith('onStart')
+  })
+
+  it('should handle errors and build raw response', async () => {
+    const error = new Error('boom')
+    const mockBuilder = vi.fn().mockResolvedValue({ statusCode: 500 })
+
+    vi.spyOn(adapter as any, 'resolveEventHandler').mockImplementation(() => {
+      throw error
+    })
+    vi.spyOn(adapter as any, 'handleError').mockResolvedValue(mockBuilder)
+    vi.spyOn(adapter as any, 'buildRawResponse').mockResolvedValue({ statusCode: 500 })
+
+    const response = await (adapter as any).eventListener({ test: true }, {})
+
+    expect(response).toEqual({ statusCode: 500 })
   })
 })
