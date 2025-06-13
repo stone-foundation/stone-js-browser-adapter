@@ -1,4 +1,4 @@
-import { NextPipe } from '@stone-js/pipeline'
+import { NextMiddleware } from '@stone-js/core'
 import { BROWSER_PLATFORM } from '../../src/constants'
 import { CookieCollection } from '@stone-js/browser-core'
 import { BrowserAdapterError } from '../../src/errors/BrowserAdapterError'
@@ -15,7 +15,7 @@ describe('IncomingEventMiddleware', () => {
   let mockBlueprint: any
   let middleware: IncomingEventMiddleware
   let mockContext: BrowserAdapterContext
-  let next: NextPipe<BrowserAdapterContext, BrowserAdapterResponseBuilder>
+  let next: NextMiddleware<BrowserAdapterContext, BrowserAdapterResponseBuilder>
 
   beforeEach(() => {
     mockBlueprint = {

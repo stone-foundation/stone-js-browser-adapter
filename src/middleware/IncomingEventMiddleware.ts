@@ -1,6 +1,5 @@
-import { IBlueprint } from '@stone-js/core'
-import { NextPipe } from '@stone-js/pipeline'
 import { BROWSER_PLATFORM } from '../constants'
+import { IBlueprint, NextMiddleware } from '@stone-js/core'
 import { BrowserAdapterError } from '../errors/BrowserAdapterError'
 import { CookieCollection, CookieOptions } from '@stone-js/browser-core'
 import { BrowserAdapterResponseBuilder, BrowserAdapterContext } from '../declarations'
@@ -34,7 +33,7 @@ export class IncomingEventMiddleware {
    * @returns A promise that resolves to the processed context.
    * @throws {BrowserAdapterError} If required components are missing in the context.
    */
-  async handle (context: BrowserAdapterContext, next: NextPipe<BrowserAdapterContext, BrowserAdapterResponseBuilder>): Promise<BrowserAdapterResponseBuilder> {
+  async handle (context: BrowserAdapterContext, next: NextMiddleware<BrowserAdapterContext, BrowserAdapterResponseBuilder>): Promise<BrowserAdapterResponseBuilder> {
     if ((context.rawEvent === undefined) || ((context.incomingEventBuilder?.add) === undefined) || context.executionContext === undefined) {
       throw new BrowserAdapterError('The context is missing required components.')
     }
