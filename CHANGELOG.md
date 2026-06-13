@@ -5,6 +5,13 @@ All notable changes to the "Stone.js Browser Adapter" extension will be document
 ## Unreleased
 
 
+## [0.1.1](https://github.com/stone-foundation/stone-js-browser-adapter/compare/v0.1.0...v0.1.1) (2026-06-13)
+
+
+### Miscellaneous Chores
+
+* update Stone core dep ([#49](https://github.com/stone-foundation/stone-js-browser-adapter/issues/49)) ([f5d255e](https://github.com/stone-foundation/stone-js-browser-adapter/commit/f5d255ebed47b61d4627f78f5e1402c493e0bbab))
+
 ## [0.1.0](https://github.com/stone-foundation/stone-js-browser-adapter/compare/v0.0.2...v0.1.0) (2025-06-13)
 
 
