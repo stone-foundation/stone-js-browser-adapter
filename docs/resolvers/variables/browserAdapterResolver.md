@@ -10,6 +10,8 @@ Creates and configures an `BrowserAdapter` for handling generic events in Browse
 
 ## Param
 
+**blueprint**
+
 The `IBlueprint` providing configuration and dependencies.
 
 ## Returns
