@@ -12,13 +12,11 @@ These options extend the default Browser adapter configuration.
 ### events?
 
 ```ts
-optional events: string[];
+optional events?: string[];
 ```
 
 Browser-specific events that the adapter should listen for.
 
 #### Inherited from
 
-```ts
-Partial.events
-```
+[`BrowserAdapterAdapterConfig`](../../../options/BrowserAdapterBlueprint/interfaces/BrowserAdapterAdapterConfig.md).[`events`](../../../options/BrowserAdapterBlueprint/interfaces/BrowserAdapterAdapterConfig.md#events)

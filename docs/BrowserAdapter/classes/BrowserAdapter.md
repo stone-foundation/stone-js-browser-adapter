@@ -11,29 +11,43 @@ abstracts the event handling process for Stone.js developers.
 
 ## Template
 
+**BrowserEvent**
+
 The type of the raw event received from Browser.
 
 ## Template
+
+**BrowserResponse**
 
 The type of the response to send back to Browser.
 
 ## Template
 
+**BrowserContext**
+
 The Browser execution context type.
 
 ## Template
+
+**IncomingBrowserEvent**
 
 The type of the processed incoming event.
 
 ## Template
 
+**IncomingBrowserEventOptions**
+
 Options used to create an incoming event.
 
 ## Template
 
+**OutgoingBrowserResponse**
+
 The type of the outgoing response after processing.
 
 ## Template
+
+**BrowserAdapterContext**
 
 Context type specific to the adapter.
 

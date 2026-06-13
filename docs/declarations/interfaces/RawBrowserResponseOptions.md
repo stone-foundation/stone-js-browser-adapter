@@ -17,7 +17,7 @@ for managing response rendering in the Browser.
 
 ## Properties
 
-### render()
+### render
 
 ```ts
 render: () => Promiseable<void>;

@@ -1,7 +1,7 @@
 # Function: Browser()
 
 ```ts
-function Browser<T>(options): ClassDecorator;
+function Browser<T>(options?): ClassDecorator;
 ```
 
 A Stone.js decorator that integrates the Browser Adapter with a class.
@@ -20,7 +20,7 @@ The type of the class being decorated. Defaults to `ClassType`.
 
 ## Parameters
 
-### options
+### options?
 
 [`BrowserOptions`](../interfaces/BrowserOptions.md) = `{}`
 
